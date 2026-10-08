@@ -1,41 +1,14 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+You are building Thadam TN, an Android-first Expo app that must also run on web for the demo.
+Read docs/SPEC.md, docs/DESIGN.md and docs/DATA.md before writing code.
 
-## Expo has changed — do not trust your training data
-
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
-
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
-
-## Commands
-
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
-
-```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
-```
-
-Run lint and typecheck before declaring any task done.
-
-## Navigation & Routing
-
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
-
-## Building with EAS
-
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
-
-## Rules
-
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+RULES
+1. Work one phase at a time. Do not start the next phase until the current one runs and its acceptance checks pass.
+2. After every phase run: npx tsc --noEmit, the unit tests, and start the app (web is fine). Fix every error. Then report: what works, what you tested, known gaps.
+3. The app must run with zero API keys. Every external service sits behind an interface in src/services with a demo implementation. Real providers are optional adapters.
+4. No lorem ipsum, no TODO stubs, no buttons that do nothing. If a feature is not built yet, do not show its button.
+5. All recommendation logic lives in src/engine as pure TypeScript functions with unit tests. Screens call the engine only through hooks.
+6. Never invent real-world facts. Use only the places and experiences in docs/DATA.md. Show seeded values with the DataBadge component labelled DEMO.
+7. Use only the design tokens in docs/DESIGN.md. Do not add colours, fonts or radii.
+8. Keep each file under 250 lines. Strong types, no any.
+9. If you must choose between more features and fewer working features, choose fewer working features.
+10. Never expose secrets. Read keys only from environment variables.
